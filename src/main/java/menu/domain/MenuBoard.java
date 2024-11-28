@@ -6,9 +6,14 @@ import java.util.Map;
 
 public class MenuBoard {
     private final Map<Category, List<Menu>> menuBoard;
+    private static final MenuBoard INSTANCE = new MenuBoard();
 
-    public MenuBoard() {
+    private MenuBoard() {
         this.menuBoard = MenuBoardInitializer.initialize();
+    }
+
+    public static MenuBoard getInstance() {
+        return INSTANCE;
     }
 
     public Menu menuSelector(List<Menu> beforeMenus, List<Menu> noEatMenus, Category category) {
