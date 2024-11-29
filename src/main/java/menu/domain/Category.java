@@ -4,7 +4,7 @@ import static menu.common.error.ErrorMessage.NO_CATEGORY_OPTION;
 
 import java.util.Arrays;
 import java.util.List;
-import menu.util.RandomNumberGenerator;
+import menu.util.Util;
 
 public enum Category {
     JAPANESE("일식", 1),
@@ -24,13 +24,14 @@ public enum Category {
 
     public static Category selectCategory(List<Category> currentCategories) {
         while (true) {
-            int randomNumber = RandomNumberGenerator.generate();
+            int randomNumber = Util.generateRandomNumber();
 
             Category selectedCategory = findByNumber(randomNumber);
 
             long categoryCount = currentCategories.stream()
                     .filter(category -> category.equals(selectedCategory))
                     .count();
+
             if(categoryCount < 2) {
                 return selectedCategory;
             }
