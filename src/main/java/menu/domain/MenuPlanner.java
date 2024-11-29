@@ -29,7 +29,7 @@ public class MenuPlanner {
 
     private void proceedSelectMenus() {
         for (int day = 0; day < wantDays; day++) {
-            Category selectedCategory = Category.selectCategory(selectedCategories);
+            Category selectedCategory = CategorySelector.selectCategory(selectedCategories);
 
             for (Coach coach : coaches) {
                 coach.requestMenuSelect(day, selectedCategory, menuSelector);

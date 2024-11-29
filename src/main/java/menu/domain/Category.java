@@ -22,22 +22,6 @@ public enum Category {
         this.number = number;
     }
 
-    public static Category selectCategory(List<Category> currentCategories) {
-        while (true) {
-            int randomNumber = Util.generateRandomNumber();
-
-            Category selectedCategory = findByNumber(randomNumber);
-
-            long categoryCount = currentCategories.stream()
-                    .filter(category -> category.equals(selectedCategory))
-                    .count();
-
-            if(categoryCount < 2) {
-                return selectedCategory;
-            }
-        }
-    }
-
     public static Category findByNumber(int requestNumber) {
         return Arrays.stream(Category.values())
                 .filter(category -> category.number == requestNumber)
