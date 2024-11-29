@@ -19,7 +19,7 @@ public class MenuBoard {
     }
 
     public static List<Menu> toMenus(String input) {
-        List<String> parsed = Arrays.asList(input.split(","));
+        List<String> parsed = Util.parseInputByCommaCanNull(input);
 
         List<Menu> menus = parsed.stream()
                 .map(Menu::from)
@@ -31,13 +31,17 @@ public class MenuBoard {
     }
 
     private static void validateMenus(List<Menu> menus) {
-        long count = menus.stream()
-                .filter(menu -> menu.equals(menu))
-                .count();
+        List<String> allMenus = menuBoard.values().stream()
+                .flatMap(List::stream)
+                .map(Menu::getName)
+                .collect(Collectors.toList());
 
-        if (count == 0) {
-            throw new IllegalArgumentException(ERROR_NOT_IN_MENUBOARD.getMessage());
+        for (Menu menu : menus) {
+            if (!allMenus.contains(menu.getName())) {
+                throw new IllegalArgumentException(ERROR_NOT_IN_MENUBOARD.getMessage());
+            }
         }
+
     }
 
     public Menu menuSelector(List<Menu> beforeMenus, List<Menu> noEatMenus, Category category) {
