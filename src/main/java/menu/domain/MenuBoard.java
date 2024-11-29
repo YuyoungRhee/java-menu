@@ -3,7 +3,6 @@ package menu.domain;
 import static menu.common.error.ErrorMessage.ERROR_NOT_IN_MENUBOARD;
 
 import camp.nextstep.edu.missionutils.Randoms;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -32,7 +31,7 @@ public class MenuBoard {
 
     private static void validateMenus(List<Menu> menus) {
         long count = menus.stream()
-                .filter(menu -> menu.isEqualTo(menu))
+                .filter(menu -> menu.equals(menu))
                 .count();
 
         if (count == 0) {
