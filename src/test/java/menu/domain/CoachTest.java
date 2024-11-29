@@ -16,13 +16,13 @@ class CoachTest {
     void requestMenuSelect() {
         // given
         List<Menu> noEatMenus = List.of();
-        Coach coach = new Coach("코치", noEatMenus, MenuBoard.getInstance());
+        Coach coach = Coach.of("코치", noEatMenus);
 
         // when
-        List<Menu> menus = coach.requestMenuSelect(MENU_REQUEST_DAYS);
+        Menu menu = coach.requestMenuSelect(0, Category.JAPANESE);
 
         // then
-        assertThat(menus).hasSize(5);
+        assertThat(menu).isNotNull();
     }
 
     @DisplayName("코치 이름이 2글자 미만이면 예외가 발생한다.")
@@ -33,7 +33,7 @@ class CoachTest {
 
         //when && then
         assertThatThrownBy(() -> {
-            Coach coach = new Coach("코", noEatMenus, MenuBoard.getInstance());
+            Coach coach = Coach.of("코", noEatMenus);
         }).isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(ERROR_COACH_NAME_LENGTH.getMessage());
     }
@@ -46,7 +46,7 @@ class CoachTest {
 
         //when && then
         assertThatThrownBy(() -> {
-            Coach coach = new Coach("코치코치코", noEatMenus, MenuBoard.getInstance());
+            Coach coach = Coach.of("코치코치코", noEatMenus);
         }).isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(ERROR_COACH_NAME_LENGTH.getMessage());
     }
@@ -59,7 +59,7 @@ class CoachTest {
 
         //when && then
         assertThatThrownBy(() -> {
-            Coach coach = new Coach("코치", noEatMenus, MenuBoard.getInstance());
+            Coach coach = Coach.of("코치", noEatMenus);
         }).isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(ERROR_NO_EAT_MENUS_SIZE.getMessage());
     }
