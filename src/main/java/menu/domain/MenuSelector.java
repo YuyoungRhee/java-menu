@@ -1,47 +1,31 @@
 package menu.domain;
 
-import java.util.ArrayList;
+import camp.nextstep.edu.missionutils.Randoms;
 import java.util.List;
-import menu.dto.MenuForCoachDto;
+import java.util.stream.Collectors;
 
 public class MenuSelector {
-    private final int wantDays;
-    private final List<Coach> coaches;
-    private final List<Category> selectedCategories = new ArrayList<>();
+    private final MenuBoard menuBoard;
 
-    public MenuSelector(int days, List<Coach> coaches) {
-        this.wantDays = days;
-        this.coaches = coaches;
+    public MenuSelector(MenuBoard menuBoard) {
+        this.menuBoard = menuBoard;
     }
 
-    public List<MenuForCoachDto> selectMenus() {
-        proceedSelectMenus();
+    public Menu selectMenu(List<Menu> beforeMenus, List<Menu> noEatMenus, Category category) {
+        List<Menu> menus = menuBoard.getMenusBy(category);
 
-        List<MenuForCoachDto> dtos = new ArrayList<>();
-        for (Coach coach : coaches) {
-            MenuForCoachDto menuForCoachDto = makeSingleResult(coach);
-            dtos.add(menuForCoachDto);
-        }
-        return dtos;
-    }
+        while (true) {
+            List<String> menuNames = menus.stream()
+                    .map(Menu::getName)
+                    .collect(Collectors.toList());
 
-    private void proceedSelectMenus() {
-        for (int day = 0; day < wantDays; day++) {
-            Category selectedCategory = Category.selectCategory(selectedCategories);
+            String menuName =  Randoms.shuffle(menuNames).get(0);
+            Menu menu = Menu.from(menuName);
 
-            for (Coach coach : coaches) {
-                coach.requestMenuSelect(day, selectedCategory);
+            if (!beforeMenus.contains(menu) && !noEatMenus.contains(menu)) {
+                return menu;
             }
         }
+
     }
-
-    private MenuForCoachDto makeSingleResult(Coach coach) {
-        List<Menu> selectedMenus = coach.getSelectedMenus();
-
-        return new MenuForCoachDto(coach.getName(), selectedMenus);
-    }
-
-
-
-
 }

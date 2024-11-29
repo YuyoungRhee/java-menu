@@ -19,7 +19,7 @@ class CoachTest {
         Coach coach = Coach.of("코치", noEatMenus);
 
         // when
-        Menu menu = coach.requestMenuSelect(0, Category.JAPANESE);
+        Menu menu = coach.requestMenuSelect(0, Category.JAPANESE, new MenuSelector(MenuBoard.getInstance()));
 
         // then
         assertThat(menu).isNotNull();

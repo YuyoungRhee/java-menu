@@ -1,10 +1,6 @@
 package menu.domain;
 
-import static menu.common.constants.MenuConstants.*;
-import static menu.common.error.ErrorMessage.*;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import menu.common.validator.CoachValidator;
 
@@ -25,12 +21,12 @@ public class Coach {
         return new Coach(name, noEatMenus);
     }
 
-    public Menu requestMenuSelect(int days, Category category) {
+    public Menu requestMenuSelect(int days, Category category, MenuSelector menuSelector) {
         if(days == 0) {
             selectedMenus = new ArrayList<>();
         }
 
-        Menu menu = menuBoard.menuSelector(selectedMenus, noEatMenus, category);
+        Menu menu = menuSelector.selectMenu(selectedMenus, noEatMenus, category);
         selectedMenus.add(menu);
 
         return menu;

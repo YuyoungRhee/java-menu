@@ -3,7 +3,6 @@ package menu.domain;
 import static menu.common.error.ErrorMessage.ERROR_NOT_IN_MENUBOARD;
 
 import camp.nextstep.edu.missionutils.Randoms;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -44,25 +43,7 @@ public class MenuBoard {
 
     }
 
-    public Menu menuSelector(List<Menu> beforeMenus, List<Menu> noEatMenus, Category category) {
-        List<Menu> menus = getMenusBy(category);
-
-        while (true) {
-            List<String> menuNames = menus.stream()
-                    .map(Menu::getName)
-                    .collect(Collectors.toList());
-
-            String menuName =  Randoms.shuffle(menuNames).get(0);
-            Menu menu = Menu.from(menuName);
-
-            if (!beforeMenus.contains(menu) && !noEatMenus.contains(menu)) {
-                return menu;
-            }
-        }
-
-    }
-
-    private List<Menu> getMenusBy(Category category) {
+    public List<Menu> getMenusBy(Category category) {
         return menuBoard.get(category);
     }
 
